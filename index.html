@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teh Ngeteh</title>
+
+    <!--fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!--feather icons-->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!--Whatsapp-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Alpine JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- App -->
+     <script src="src/app.js"></script>
+  </head>
+
+  <body>
+    <!--navbar start-->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">teh<span>ngeteh</span>.</a>
+
+      <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Menu</a>
+        <a href="#products">Produk</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="search-button"><i data-feather="search"></i></a>
+        <a href="#" @click.prevent id="shopping-cart-button">
+          <i data-feather="shopping-cart"></i>
+          <span class="quantity-badge" x-show="$store.cart.quantity" x-text="$store.cart.quantity"></span>
+        </a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+
+      <!-- Search Form start -->
+      <div class="search-form">
+        <input type="search" id="search-box" placeholder="Search here..." />
+        <label for="search-box"><i data-feather="search"></i></label>
+      </div>
+      <!-- Search Form end -->
+
+      <!-- Shopping Cart start -->
+       <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+          <div class="cart-item">
+          <img :src="`img/produk/${item.img}`" :alt="item.name">
+          <div class="item-detail">
+            <h3 x-text="item.name"></h3>
+            <div class="item-price">
+              <span x-text="rupiah(item.price)"></span> &times;
+              <button id="remove" @click="$store.cart.remove(item.id)" >&minus;</button>
+              <span x-text="item.quantity"></span>
+              <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+              <span x-text="rupiah(item.total)"></span>
+            </div>
+          </div>
+          </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem;">Cart is Empty</h4>
+        <h4 x-show="$store.cart.items.length">Total : <span x-text="rupiah($store.cart.total)"></span></h4>
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action="" id="checkoutForm">
+            <h5>Customer Detail</h5>
+            <label for="Name">
+              <span>Name</span>
+              <input type="text" name="name" id="name">
+            </label>
+            <label for="phone">
+              <span>Phone</span>
+              <input type="number" name="phone" id="phone">
+            </label>
+            <label for="address">
+              <span>Address</span>
+              <input type="text" name="adress" id="adress" autocomplete="off">
+            </label>
+
+            <button class="checkout-button" type="submit" id="checkout-button" value="checkout">Checkout</button>
+          </form>
+        </div>
+       </div>
+      <!-- Shopping Cart end -->
+    </nav>
+    <!--navbar end-->
+
+    <!--Hero Section start-->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Nikmati Momen Bersama Dengan Teh <span>ngeteh</span></h1>
+        <p>
+          Kami menyediakan teh dengan kualitas terbaik yang diolah dengan cara
+          tradisional indonesia
+        </p>
+        <a href="#" class="cta">Beli Sekarang</a>
+      </main>
+    </section>
+    <!--Hero Section end-->
+
+    <!--About Section start-->
+    <section id="about" class="about">
+      <h2>Tentang Kami</h2>
+
+      <div class="row">
+        <div class="about-img">
+          <img src="img/tentang-kami.jpg" alt="Tentang Kami" />
+        </div>
+        <div class="content">
+          <h3>Kenapa memilih teh <span>ngeteh</span>?</h3>
+          <p>
+            Teh Ngeteh adalah pilihan sempurna bagi pecinta teh yang menginginkan pengalaman menikmati teh yang autentik dan berkualitas tinggi. Dipetik dari kebun teh terbaik di dataran tinggi Indonesia, Teh Ngeteh menawarkan rasa yang kaya dan aroma yang menggugah selera. Setiap daun teh diproses dengan teliti untuk mempertahankan kesegarannya dan memberikan rasa yang otentik pada setiap cangkir. Selain itu, Teh Ngeteh mengutamakan praktik berkelanjutan dalam produksinya, memastikan bahwa setiap cangkir yang Anda nikmati tidak hanya baik untuk Anda, tetapi juga untuk lingkungan. Dengan Teh Ngeteh, Anda tidak hanya sekadar minum teh, tetapi juga merasakan tradisi dan keaslian yang melekat pada setiap tegukan. Pilih Teh Ngeteh untuk menikmati kualitas premium dan dukunglah produk lokal yang berkomitmen pada keberlanjutan.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!--About Section end-->
+
+    <!--Menu Section start-->
+    <section id="menu" class="menu">
+      <h2>Menu Kami</h2>
+      <p>
+        Ada banyak jenis Teh Indonesia yang terkenal akan kenikmatannya. Tak hanya teh hitam dan teh hijau, Indonesia memiliki sejumlah jenis teh yang diracik dari bahan-bahan lain selain daun teh. Setiap jenis teh asli Indonesia menawarkan cita rasa berbeda.
+      </p>
+
+      <div class="row">
+        <div class="menu-card">
+          <img src="img/1.jpg" alt="Teh Hitam" class="menu-card-img" />
+          <h3 class="menu-card-title">- Teh Hitam -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/1.jpg" alt="Teh Hitam" class="menu-card-img" />
+          <h3 class="menu-card-title">- Teh Hijau -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/1.jpg" alt="Teh Hitam" class="menu-card-img" />
+          <h3 class="menu-card-title">- Teh Binahong -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/1.jpg" alt="Teh Hitam" class="menu-card-img" />
+          <h3 class="menu-card-title">- Teh Kayu Aro -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/1.jpg" alt="Teh Hitam" class="menu-card-img" />
+          <h3 class="menu-card-title">- Teh Daun Salam -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/1.jpg" alt="Teh Hitam" class="menu-card-img" />
+          <h3 class="menu-card-title">- Teh Putih -</h3>
+          <p class="menu-card-price">IDR 15K</p>
+        </div>
+      </div>
+    </section>
+    <!--Menu Section end-->
+
+    <!-- Products Section start -->
+    <section class="products" id="products" x-data="products">
+      <h2>Produk Kami</h2>
+    
+      <div class="row">
+        <template x-for="(item, index) in items" :key="index">
+          <div class="product-card">
+            <div class="product-icons">
+              <a href="#" @click.prevent="$store.cart.add(item)">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <use href="img/feather-sprite.svg#shopping-cart" />
+                </svg>
+              </a>
+              <a href="#" class="item-detail-button">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <use href="img/feather-sprite.svg#eye" />
+                </svg>
+              </a>
+            </div>
+            <div class="product-image">
+              <img :src="`img/produk/${item.img}`" :alt="item.name" />
+            </div>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-stars">
+                <i data-feather="star" class="star-full"></i>
+                <i data-feather="star" class="star-full"></i>
+                <i data-feather="star" class="star-full"></i>
+                <i data-feather="star" class="star-full"></i>
+                <i data-feather="star"></i>
+              </div>
+              <div class="product-price"><span x-text="rupiah(item.price)"></span></div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+    <!-- Products Section end -->
+
+    <section id="menu" class="menu">
+      <h2>Review</h2>
+
+      <div class="row">
+        <div class="menu-card">
+          <img src="img/person-1.jpg" alt="Teh Hitam" class="menu-card-img" />
+          <h3 class="menu-card-title">- Mawar -</h3>
+          <p class="menu-card-price">Tehnya enak</p>
+          <div class="product-stars">
+            <i data-feather="star" class="star-full"></i>
+            <i data-feather="star"></i>
+            <i data-feather="star"></i>
+            <i data-feather="star"></i>
+            <i data-feather="star"></i>
+        </div>
+      </div>
+        <div class="menu-card">
+          <img src="img/person-1.jpg" alt="Teh Hitam" class="menu-card-img" />
+          <h3 class="menu-card-title">- Mawar -</h3>
+          <p class="menu-card-price">Tehnya enak</p>
+          <div class="product-stars">
+            <i data-feather="star" class="star-full"></i>
+            <i data-feather="star"></i>
+            <i data-feather="star"></i>
+            <i data-feather="star"></i>
+            <i data-feather="star"></i>
+        </div>
+      </div>
+        <div class="menu-card">
+          <img src="img/person-1.jpg" alt="Teh Hitam" class="menu-card-img" />
+          <h3 class="menu-card-title">- Mawar -</h3>
+          <p class="menu-card-price">Tehnya enak</p>
+          <div class="product-stars">
+            <i data-feather="star" class="star-full"></i>
+            <i data-feather="star"></i>
+            <i data-feather="star"></i>
+            <i data-feather="star"></i>
+            <i data-feather="star"></i>
+        </div>
+      </div>
+    </section>
+
+    <!--Contact Section start-->
+    <section id="contact" class="contact">
+      <h2>Kontak Kami</h2>
+      <p>
+        Untuk info lebih lanjut silahkan kunjungi sosial media kami atau
+        langsung gunakan tombol whatsapp di pojok kanan bawah atau bisa langsung
+        mengunjungi toko offline kami.
+      </p>
+
+      <div class="row">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1570.1331313626158!2d109.22089792806304!3d-7.411161257892141!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e655fa41bb42d41%3A0x65dd0094a806756b!2sAbon%20Alvita!5e0!3m2!1sid!2sid!4v1718455382724!5m2!1sid!2sid"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="map"
+        ></iframe>
+
+        <form action="">
+          <div class="input-group">
+            <i data-feather="user"></i>
+            <input type="text" placeholder="Nama" />
+          </div>
+          <div class="input-group">
+            <i data-feather="mail"></i>
+            <input type="text" placeholder="E-mail" />
+          </div>
+          <div class="input-group">
+            <i data-feather="phone"></i>
+            <input type="text" placeholder="Nomor HP" />
+          </div>
+          <button type="submit" class="btn">Kirim pesan</button>
+        </form>
+      </div>
+    </section>
+    <!--Contact Section end-->
+
+    <!--Footer start-->
+    <footer>
+      <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+      </div>
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Kontak</a>
+      </div>
+      <div class="credit">
+        <p>copyrights <a href="">tehngeteh</a>. | &copy; 2024.</p>
+      </div>
+    </footer>
+    <!--Footer end-->
+
+    <!-- Modal Box Item Detail start -->
+     <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/produk/produk-1.jpg" alt="Product 1">
+          <div class="product-content">
+            <h3>Teh Hitam</h3>
+            <p>Jenis teh satu ini tidak hanya populer di Indonesia, tetapi hampir di berbagai negara. Namun, untuk menikmati teh hitam negara kita tidak perlu mengimpornya dari negara lain. Indonesia memiliki banyak kebun teh sehingga bisa memproduksi teh hitam sendiri.</p>
+            <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star"></i>
+              <i data-feather="star"></i>
+            </div>
+            <div class="product-price">IDR 45k <span>IDR 60k</span></div>
+            <a href="#"><i data-feather="shopping-cart"></i> <span>add to cart</span></a>
+          </div>
+        </div>
+      </div>
+     </div>
+
+    <!--Whatsapp-->
+    <a href="https:/wa.me/6281395852120" target="_blank" class="whatsapp_float"
+      ><i class="fa-brands fa-whatsapp whatsapp-icon"></i
+    ></a>
+
+    <!--feather icons-->
+    <script>
+      // Initialize Feather Icons
+      document.addEventListener("DOMContentLoaded", function() {
+        feather.replace();
+      });
+    </script>
+
+    <!--My Javascript-->
+    <script src="js/script.js"></script>
+  </body>
+</html>
